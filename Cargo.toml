@@ -1,0 +1,18 @@
+[package]
+name = "qemu_screen_grab_server"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+tokio = { version = "1.45", features = ["full"] }
+winapi = { version = "0.3.9", features = ["winuser", "wingdi", "winerror"] }
+ctrlc = "3.4"
+
+[[bin]]
+name = "qemu_screen_grab_server"
+path = "src/main.rs"
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1

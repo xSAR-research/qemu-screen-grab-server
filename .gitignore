@@ -1,0 +1,19 @@
+/target/
+*.log
+*.ppm
+*.raw
+.idea/
+.vscode/
+*.code-workspace
+.codex/
+
+# Trigger Tree: ignore local telemetry, retain project configuration
+!.trigger-tree/
+.trigger-tree/*
+!.trigger-tree/config.sh
+!.trigger-tree/gate.json
+!.trigger-tree/directives.json
+
+# Local developer and agent notes
+AGENTS.md
+.markdownlint.json
