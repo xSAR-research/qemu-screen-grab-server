@@ -4,10 +4,12 @@ version = "0.1.1"
 edition = "2024"
 
 [dependencies]
+xsar = { path = "../xsar", default-features = false, features = ["tcp_capture"] }
+
+[target.'cfg(windows)'.dependencies]
 tokio = { version = "1.53.3", features = ["full"] }
 winapi = { version = "0.3.9", features = ["winuser", "wingdi", "winerror"] }
 ctrlc = "3.4"
-xsar = { path = "../xsar", features = ["full"] }
 
 [[bin]]
 name = "qemu_screen_grab_server"

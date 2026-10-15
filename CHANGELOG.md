@@ -1,5 +1,16 @@
 # Changelog
 
+## Unreleased
+
+- Use shared xSAR TCP protocol version 2 with a packed 14-byte header and
+  `u16` stride; rebuild the host client and guest server together.
+- Calculate stride with checked conversion: 1920 pixels * 4 bytes = 7680 bytes.
+  `u16` holds 65535, limiting complete BGRA rows to 65532 bytes / 16383 pixels.
+- Normalize GDI's unused fourth byte to opaque alpha: wire pixels are BGRA,
+  and the client converts them to RGBA. Neither byte layout is ARGB.
+- Reject invalid dimensions, row lengths and frame sizes; test signed-input
+  boundaries, exact header serialization and rejection of old requests.
+
 ## v0.1.0
 
 Initial code build, needs fixes for:
