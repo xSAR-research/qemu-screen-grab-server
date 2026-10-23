@@ -309,4 +309,4 @@ dependencies = [
 
 [[package]]
 name = "xsar"
-version = "0.4.2-candidate.2"
+version = "0.8.104"

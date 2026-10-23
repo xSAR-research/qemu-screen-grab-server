@@ -6,6 +6,13 @@ the Windows guest. Protocol v3 sends tightly packed, top-down BGR8 and supports
 successive requests on one connection; explicit legacy v2 remains available
 for comparison. Capture uses GDI on one dedicated thread.
 
+The current paired host checkouts are **xSAR 0.8.104** and
+**qmp-qemu-socket 2.9.133**. This server remains **0.1.3**; the paired publication
+updates dependency lock metadata and documentation without changing its Rust
+source or wire protocol. The `../xsar` dependency requires the corresponding
+sibling checkout when building from source. Native Windows capture verification
+and the host application's Pyramid acceptance remain separate checks.
+
 See [Windows build and verification](docs/verification-windows.md) for reviewed
 sibling-source builds, separate executable output and native acceptance checks.
 Compilation and portable tests do not establish native GDI behaviour or live

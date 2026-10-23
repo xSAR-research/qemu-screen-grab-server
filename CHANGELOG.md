@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.1.3 — publication documentation, 23 October 2026
+
+- Synchronise the README and dependency lock metadata with the current paired
+  host repositories: xSAR 0.8.104 and qmp-qemu-socket 2.9.133. The relative sibling
+  dependency remains; no registry release or temporary source override is added.
+- Retain version-3 persistent top-down BGR8 capture, explicit legacy version-2
+  compatibility, bounded client/capture ownership and per-run console/file logs.
+  No server Rust, wire format, capture behaviour or package version changes.
+- Preserve the existing Windows build/native verification instructions and
+  network-exposure guidance. Host metadata/portable checks do not establish
+  Windows GDI behaviour, guest executable identity or Pyramid gameplay acceptance.
+- The server's starting commit, README and changelog matched GitHub before this
+  documentation update. Publish these changes to the server repository itself;
+  basic-route-planning is the separate offline console repository.
+
 ## Unreleased
 
 - Version 0.1.3 adds automatic per-run logging in the launch working directory.
