@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.4 — timing constants, 23 October 2026
+
+- Centralise idle/request/capture-queue/response budgets and statistics/shutdown/response polls in `src/parameters.rs`. Preserve capture ownership and the wire protocol; align the sibling xSAR lock entry with 0.8.105.
+- Preserve every timing value, fresh-effect proof and STOP/context rule. No tuning, new dependencies or unsafe code.
+- Required host checks passed 19 tests, with zero failures, ignored tests or filtered tests. No major/minor version change, installation or publication; native Windows/Beast acceptance remains separate.
+
 ## 0.1.3 — publication documentation, 23 October 2026
 
 - Synchronise the README and dependency lock metadata with the current paired
@@ -63,4 +69,3 @@ Initial code build, needs fixes for:
 - Move the screen-grabber to a service, that is always running on boot.
 - Ensure shared memory is always cleaned up on exit.
 - Ensure shared memory is cleaned up on disconnect.
-

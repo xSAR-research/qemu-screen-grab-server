@@ -8,6 +8,10 @@ mod server;
 mod logging;
 
 
+#[cfg(any(windows, test))]
+mod parameters;
+
+
 #[cfg(windows)]
 mod windows_capture;
 

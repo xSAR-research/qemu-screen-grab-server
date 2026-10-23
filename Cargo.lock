@@ -161,7 +161,7 @@ dependencies = [
 
 [[package]]
 name = "qemu_screen_grab_server"
-version = "0.1.3"
+version = "0.1.4"
 dependencies = [
  "ctrlc",
  "tokio",
@@ -309,4 +309,4 @@ dependencies = [
 
 [[package]]
 name = "xsar"
-version = "0.8.104"
+version = "0.8.105"

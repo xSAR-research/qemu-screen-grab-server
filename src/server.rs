@@ -4,6 +4,8 @@
 //! cover all queued/executing/sending responses. Network senders cannot block
 //! the capture owner. Deadlines cannot pre-empt an executing Win32 call.
 
+use crate::parameters;
+
 use std::{
     io,
     sync::{
@@ -61,11 +63,11 @@ pub(crate) struct Limits {
 impl Default for Limits {
     fn default() -> Self {
         Self {
-            idle: Duration::from_secs(120),
-            request: Duration::from_secs(10),
-            queue: Duration::from_secs(2),
-            response: Duration::from_secs(10),
-            summary: Duration::from_secs(60),
+            idle: parameters::CLIENT_IDLE_TIMEOUT,
+            request: parameters::REQUEST_TIMEOUT,
+            queue: parameters::CAPTURE_QUEUE_TIMEOUT,
+            response: parameters::RESPONSE_TIMEOUT,
+            summary: parameters::STATISTICS_INTERVAL,
         }
     }
 }
@@ -379,7 +381,7 @@ fn capture_owner(
         .spawn(move || {
             let mut frame = 0u64;
             while !shutdown.load(Ordering::Acquire) {
-                let job = match receiver.recv_timeout(Duration::from_millis(20)) {
+                let job = match receiver.recv_timeout(parameters::SHUTDOWN_POLL_INTERVAL) {
                     Ok(job) => job,
                     Err(mpsc::RecvTimeoutError::Timeout) => continue,
                     Err(mpsc::RecvTimeoutError::Disconnected) => break,
@@ -537,7 +539,7 @@ async fn await_capture(
             () = tokio::time::sleep_until(result_deadline) => {
                 return Err(Failure::new(Status::DeadlineExceeded, "capture result deadline"));
             }
-            () = sleep(Duration::from_millis(10)) => {
+            () = sleep(parameters::RESPONSE_POLL_INTERVAL) => {
                 if scheduler.shutdown.load(Ordering::Acquire) { return Err(Failure::new(Status::ShuttingDown, "shutdown while awaiting capture")); }
                 if !started.load(Ordering::Acquire) && queued.elapsed() >= limits.queue { return Err(Failure::new(Status::DeadlineExceeded, "queue wait deadline")); }
             }
@@ -848,7 +850,7 @@ async fn run_with_shutdown_reporter(
                     }
                 });
             }
-            () = sleep(Duration::from_millis(20)) => {}
+            () = sleep(parameters::SHUTDOWN_POLL_INTERVAL) => {}
             _ = summary.tick() => stats.lock().expect("statistics mutex").print("periodic"),
             Some(result) = handlers.join_next(), if !handlers.is_empty() => {
                 if result.is_err() { stats.lock().expect("statistics mutex").fail(Status::CaptureFailed); }
